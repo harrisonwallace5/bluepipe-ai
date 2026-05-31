@@ -41,26 +41,17 @@ function UploadPanel({ selectedFile, onFileSelect, onAnalysisResult }) {
     setIsAnalyzing(true);
     setApiError('');
     setAnalysisResult(null);
-
     try {
       const formData = new FormData();
       formData.append('file', file);
-
       const response = await fetch('http://localhost:8000/api/analyze', {
         method: 'POST',
         body: formData,
       });
-
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.status}`);
-      }
-
+      if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const data = await response.json();
       setAnalysisResult(data);
-
-      if (onAnalysisResult) {
-        onAnalysisResult(data);
-      }
+      if (onAnalysisResult) onAnalysisResult(data);
     } catch (err) {
       setApiError(`Analysis failed: ${err.message}`);
     } finally {
@@ -87,8 +78,8 @@ function UploadPanel({ selectedFile, onFileSelect, onAnalysisResult }) {
 
     setError('');
     onFileSelect(file);
-    analyzeFile(file);
     setIsDragging(false);
+    analyzeFile(file);
   };
 
   const handleDrop = (event) => {
@@ -114,7 +105,64 @@ function UploadPanel({ selectedFile, onFileSelect, onAnalysisResult }) {
     inputRef.current?.click();
   };
 
-  const resultKpis = analysisResult?.kpis ?? analysisResult;
+  const renderStatusCard = () => {
+    if (isAnalyzing) {
+      return (
+        <>
+          <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Upload status</p>
+          <p className="mt-3 font-medium text-electric">Analyzing…</p>
+          <p className="mt-2 text-sm leading-7 text-slate-300">
+            Sending to BluePipe AI analysis service — results will appear below.
+          </p>
+        </>
+      );
+    }
+
+    if (apiError) {
+      return (
+        <>
+          <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Upload status</p>
+          <p className="mt-3 font-medium text-rose-300">Connection error</p>
+          <p className="mt-2 text-sm leading-7 text-rose-200">{apiError}</p>
+        </>
+      );
+    }
+
+    if (analysisResult) {
+      const k = analysisResult.kpis;
+      return (
+        <>
+          <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Upload status</p>
+          <p className="mt-3 font-medium text-emerald-300">✓ Analysis complete</p>
+          <p className="mt-2 text-sm leading-6 text-slate-200">
+            {k.total_fixtures} fixtures · {k.flagged_count} flagged · {k.pipe_runs_estimated} pipe runs · {k.estimated_labor_hrs} labor hrs
+          </p>
+        </>
+      );
+    }
+
+    if (selectedFile) {
+      return (
+        <>
+          <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Upload status</p>
+          <p className="mt-3 font-medium text-white">Ready for backend handoff</p>
+          <p className="mt-2 text-sm leading-7 text-slate-300">
+            The file is staged in local component state and can be posted to your API as multipart form data.
+          </p>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Recommended next integration</p>
+        <p className="mt-3 text-sm leading-7 text-slate-300">
+          Send the uploaded file to an API route, return structured JSON, and replace the demo data in the
+          results panel with live analysis output.
+        </p>
+      </>
+    );
+  };
 
   return (
     <div className="panel shadow-glow">
@@ -130,8 +178,8 @@ function UploadPanel({ selectedFile, onFileSelect, onAnalysisResult }) {
         </div>
 
         <p className="muted-copy mt-4 max-w-2xl">
-          Drop a plumbing drawing package, detail sheet, or marked-up field sketch. The current experience stores
-          the selected file locally so your frontend can be wired to a real API next.
+          Drop a plumbing drawing package, detail sheet, or marked-up field sketch. Uploads are sent to the
+          BluePipe AI analysis service and results appear automatically.
         </p>
 
         <div
@@ -174,7 +222,8 @@ function UploadPanel({ selectedFile, onFileSelect, onAnalysisResult }) {
 
             <h3 className="mt-6 font-display text-2xl font-semibold text-white">Drag and drop your plan set</h3>
             <p className="mt-3 max-w-lg text-sm leading-7 text-slate-300">
-              Uploads are sent to the BluePipe AI analysis service and results appear automatically.
+              Upload one plan file to run the BluePipe AI intake flow. Results populate the analysis panel below
+              automatically after upload.
             </p>
             <p className="mt-2 text-xs uppercase tracking-[0.22em] text-slate-400">
               Single file upload · Max 25 MB
@@ -219,47 +268,7 @@ function UploadPanel({ selectedFile, onFileSelect, onAnalysisResult }) {
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-navy/70 p-5">
-            {selectedFile ? (
-              <>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Upload status</p>
-                {isAnalyzing ? (
-                  <>
-                    <p className="mt-3 font-medium text-white">
-                      <span className="mr-2 inline-block h-2.5 w-2.5 animate-pulse rounded-full bg-electric align-middle" />
-                      Analyzing...
-                    </p>
-                    <p className="mt-2 text-sm leading-7 text-slate-300">Sending to BluePipe AI...</p>
-                  </>
-                ) : apiError ? (
-                  <>
-                    <p className="mt-3 font-medium text-rose-200">{apiError}</p>
-                  </>
-                ) : analysisResult ? (
-                  <>
-                    <p className="mt-3 font-medium text-green-300">✓ Analysis complete</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-300">
-                      {`${resultKpis?.total_fixtures ?? '—'} fixtures · ${resultKpis?.flagged_count ?? '—'} flagged · ${resultKpis?.pipe_runs_estimated ?? '—'} pipe runs · ${resultKpis?.estimated_labor_hrs ?? '—'} labor hrs`}
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <p className="mt-3 font-medium text-white">Ready for backend handoff</p>
-                    <p className="mt-2 text-sm leading-7 text-slate-300">
-                      The file is staged in local component state and can be posted to your API as multipart form
-                      data.
-                    </p>
-                  </>
-                )}
-              </>
-            ) : (
-              <>
-                <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Recommended next integration</p>
-                <p className="mt-3 text-sm leading-7 text-slate-300">
-                  Send the uploaded file to an API route, return structured JSON, and replace the demo data in the
-                  results panel with live analysis output.
-                </p>
-              </>
-            )}
+            {renderStatusCard()}
           </div>
         </div>
       </div>

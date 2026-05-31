@@ -47,6 +47,7 @@ const workflowSteps = [
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [analysisData, setAnalysisData] = useState(null);
 
   return (
     <div className="relative overflow-hidden">
@@ -60,7 +61,11 @@ function App() {
 
         <section id="upload" className="section-shell py-16 sm:py-20">
           <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-            <UploadPanel selectedFile={selectedFile} onFileSelect={setSelectedFile} />
+            <UploadPanel
+              selectedFile={selectedFile}
+              onFileSelect={setSelectedFile}
+              onAnalysisResult={setAnalysisData}
+            />
 
             <aside className="panel shadow-glow">
               <div className="p-6 sm:p-8">
@@ -95,7 +100,7 @@ function App() {
         </section>
 
         <section id="results" className="section-shell py-16 sm:py-20">
-          <ResultsPanel selectedFile={selectedFile} />
+          <ResultsPanel selectedFile={selectedFile} analysisData={analysisData} />
         </section>
 
         <section id="pricing" className="section-shell py-16 sm:py-20">
