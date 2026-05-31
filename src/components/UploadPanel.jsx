@@ -29,10 +29,44 @@ function isAcceptedFile(file) {
   return file.type === 'application/pdf' || file.type.startsWith('image/') || name.endsWith('.pdf');
 }
 
-function UploadPanel({ selectedFile, onFileSelect }) {
+function UploadPanel({ selectedFile, onFileSelect, onAnalysisResult }) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState('');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState(null);
+  const [apiError, setApiError] = useState('');
   const inputRef = useRef(null);
+
+  const analyzeFile = async (file) => {
+    setIsAnalyzing(true);
+    setApiError('');
+    setAnalysisResult(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('http://localhost:8000/api/analyze', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setAnalysisResult(data);
+
+      if (onAnalysisResult) {
+        onAnalysisResult(data);
+      }
+    } catch (err) {
+      setApiError(`Analysis failed: ${err.message}`);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
   const updateSelection = (file) => {
     if (!file) {
@@ -53,6 +87,7 @@ function UploadPanel({ selectedFile, onFileSelect }) {
 
     setError('');
     onFileSelect(file);
+    analyzeFile(file);
     setIsDragging(false);
   };
 
@@ -78,6 +113,8 @@ function UploadPanel({ selectedFile, onFileSelect }) {
   const openPicker = () => {
     inputRef.current?.click();
   };
+
+  const resultKpis = analysisResult?.kpis ?? analysisResult;
 
   return (
     <div className="panel shadow-glow">
@@ -137,8 +174,7 @@ function UploadPanel({ selectedFile, onFileSelect }) {
 
             <h3 className="mt-6 font-display text-2xl font-semibold text-white">Drag and drop your plan set</h3>
             <p className="mt-3 max-w-lg text-sm leading-7 text-slate-300">
-              Upload one plan file to demo the intake flow. Once your backend is connected, this panel can post
-              multipart form data directly to your analysis service.
+              Uploads are sent to the BluePipe AI analysis service and results appear automatically.
             </p>
             <p className="mt-2 text-xs uppercase tracking-[0.22em] text-slate-400">
               Single file upload · Max 25 MB
@@ -186,10 +222,34 @@ function UploadPanel({ selectedFile, onFileSelect }) {
             {selectedFile ? (
               <>
                 <p className="text-xs uppercase tracking-[0.24em] text-slate-400">Upload status</p>
-                <p className="mt-3 font-medium text-white">Ready for backend handoff</p>
-                <p className="mt-2 text-sm leading-7 text-slate-300">
-                  The file is staged in local component state and can be posted to your API as multipart form data.
-                </p>
+                {isAnalyzing ? (
+                  <>
+                    <p className="mt-3 font-medium text-white">
+                      <span className="mr-2 inline-block h-2.5 w-2.5 animate-pulse rounded-full bg-electric align-middle" />
+                      Analyzing...
+                    </p>
+                    <p className="mt-2 text-sm leading-7 text-slate-300">Sending to BluePipe AI...</p>
+                  </>
+                ) : apiError ? (
+                  <>
+                    <p className="mt-3 font-medium text-rose-200">{apiError}</p>
+                  </>
+                ) : analysisResult ? (
+                  <>
+                    <p className="mt-3 font-medium text-green-300">✓ Analysis complete</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-300">
+                      {`${resultKpis?.total_fixtures ?? '—'} fixtures · ${resultKpis?.flagged_count ?? '—'} flagged · ${resultKpis?.pipe_runs_estimated ?? '—'} pipe runs · ${resultKpis?.estimated_labor_hrs ?? '—'} labor hrs`}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="mt-3 font-medium text-white">Ready for backend handoff</p>
+                    <p className="mt-2 text-sm leading-7 text-slate-300">
+                      The file is staged in local component state and can be posted to your API as multipart form
+                      data.
+                    </p>
+                  </>
+                )}
               </>
             ) : (
               <>
