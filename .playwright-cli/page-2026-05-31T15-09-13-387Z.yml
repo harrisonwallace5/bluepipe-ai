@@ -1,0 +1,60 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - generic [ref=e9]:
+        - heading "BluePipe AI" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Plumbing Plan Analyzer
+    - navigation "Primary navigation" [ref=e12]:
+      - button "Dashboard" [ref=e13] [cursor=pointer]:
+        - img [ref=e14]
+        - generic [ref=e17]: Dashboard
+      - button "Upload Plan" [ref=e18] [cursor=pointer]:
+        - img [ref=e19]
+        - generic [ref=e22]: Upload Plan
+      - button "Results" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+        - generic [ref=e26]: Results
+      - button "Permit Package" [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+        - generic [ref=e31]: Permit Package
+      - button "Export" [active] [ref=e32] [cursor=pointer]:
+        - img [ref=e33]
+        - generic [ref=e35]: Export
+    - generic [ref=e36]:
+      - generic [ref=e37]: Inference Model
+      - generic [ref=e40]: "Model: TinyUNet v3"
+  - main [ref=e41]:
+    - generic [ref=e834]:
+      - generic [ref=e835]:
+        - generic [ref=e836]:
+          - generic [ref=e837]: Data Delivery
+          - heading "Export" [level=2] [ref=e838]
+          - paragraph [ref=e839]: Deliver schedules, reports, overlays, and machine-readable metadata to downstream review, archive, or API workflows.
+        - generic [ref=e840]: Offline Demo Downloads
+      - generic [ref=e841]:
+        - article [ref=e842]:
+          - generic [ref=e843]:
+            - heading "CSV" [level=4] [ref=e844]
+            - paragraph [ref=e845]: Fixture Schedule, Pipe Schedule, Compliance Report
+          - button "CSV Download" [ref=e847] [cursor=pointer]
+        - article [ref=e848]:
+          - generic [ref=e849]:
+            - heading "PDF" [level=4] [ref=e850]
+            - paragraph [ref=e851]: Full Permit Package, Individual Sheets
+          - button "PDF Download" [ref=e853] [cursor=pointer]
+        - article [ref=e854]:
+          - generic [ref=e855]:
+            - heading "JSON" [level=4] [ref=e856]
+            - paragraph [ref=e857]: Machine-readable metadata, Model usage proof
+          - button "JSON Download" [ref=e859] [cursor=pointer]
+        - article [ref=e860]:
+          - generic [ref=e861]:
+            - heading "PNG" [level=4] [ref=e862]
+            - paragraph [ref=e863]: Plan overlay, Isometric view, WSFU schedule
+          - button "PNG Download" [ref=e865] [cursor=pointer]
+      - article [ref=e866]:
+        - generic [ref=e868]:
+          - heading "API Endpoint" [level=3] [ref=e869]
+          - paragraph [ref=e870]: Example request shape for posting a plan image to the analysis service.
+        - generic [ref=e872]: "POST /api/analyze Content-Type: multipart/form-data curl -X POST https://example.com/api/analyze \\ -F \"plan=@floor-plan.png\" \\ -F \"standards_profile=us_domestic_water_plan_v1\" \\ -F \"sizing_profile=Wisconsin DSPS\" \\ -F \"generate_permit_package=true\" \\ -F \"generate_isometric=true\" Response: { \"project\": \"lakewood-blank-floor-plan\", \"status\": \"complete\", \"compliance_ready\": true, \"fixture_schedule\": [...], \"pipe_schedule\": [...], \"permit_package\": [...], \"provenance\": { \"model\": \"TinyUNet v3\", \"checkpoint_sha\": \"36a7094c...\" } }"

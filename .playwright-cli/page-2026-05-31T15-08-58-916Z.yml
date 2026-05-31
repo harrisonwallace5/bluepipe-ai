@@ -1,0 +1,135 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - generic [ref=e9]:
+        - heading "BluePipe AI" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Plumbing Plan Analyzer
+    - navigation "Primary navigation" [ref=e12]:
+      - button "Dashboard" [ref=e13] [cursor=pointer]:
+        - img [ref=e14]
+        - generic [ref=e17]: Dashboard
+      - button "Upload Plan" [ref=e18] [cursor=pointer]:
+        - img [ref=e19]
+        - generic [ref=e22]: Upload Plan
+      - button "Results" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+        - generic [ref=e26]: Results
+      - button "Permit Package" [active] [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+        - generic [ref=e31]: Permit Package
+      - button "Export" [ref=e32] [cursor=pointer]:
+        - img [ref=e33]
+        - generic [ref=e35]: Export
+    - generic [ref=e36]:
+      - generic [ref=e37]: Inference Model
+      - generic [ref=e40]: "Model: TinyUNet v3"
+  - main [ref=e41]:
+    - generic [ref=e724]:
+      - generic [ref=e725]:
+        - generic [ref=e726]:
+          - generic [ref=e727]: Submittal Package
+          - heading "Permit Package" [level=2] [ref=e728]
+          - paragraph [ref=e729]: Permit-ready sheet set, provenance, and signoff details for local submission workflows.
+        - generic [ref=e730]: Package Complete
+      - article [ref=e731]:
+        - generic [ref=e733]:
+          - article [ref=e734]:
+            - generic [ref=e735]:
+              - heading "Floor Plan Sheet (36\"x24\")" [level=4] [ref=e736]
+              - paragraph [ref=e737]: PDF/PNG
+            - generic [ref=e738]:
+              - button "View" [ref=e739] [cursor=pointer]
+              - button "Download" [ref=e740] [cursor=pointer]
+          - article [ref=e741]:
+            - generic [ref=e742]:
+              - heading "WSFU Schedule" [level=4] [ref=e743]
+              - paragraph [ref=e744]: PDF/PNG
+            - generic [ref=e745]:
+              - button "View" [ref=e746] [cursor=pointer]
+              - button "Download" [ref=e747] [cursor=pointer]
+          - article [ref=e748]:
+            - generic [ref=e749]:
+              - heading "30/60 Isometric Sheet" [level=4] [ref=e750]
+              - paragraph [ref=e751]: PDF/PNG
+            - generic [ref=e752]:
+              - button "View" [ref=e753] [cursor=pointer]
+              - button "Download" [ref=e754] [cursor=pointer]
+          - article [ref=e755]:
+            - generic [ref=e756]:
+              - heading "Cover / Index Sheet" [level=4] [ref=e757]
+              - paragraph [ref=e758]: PDF
+            - generic [ref=e759]:
+              - button "View" [ref=e760] [cursor=pointer]
+              - button "Download" [ref=e761] [cursor=pointer]
+          - article [ref=e762]:
+            - generic [ref=e763]:
+              - heading "Specification & Signoff Sheet" [level=4] [ref=e764]
+              - paragraph [ref=e765]: PDF
+            - generic [ref=e766]:
+              - button "View" [ref=e767] [cursor=pointer]
+              - button "Download" [ref=e768] [cursor=pointer]
+          - article [ref=e769]:
+            - generic [ref=e770]:
+              - heading "Monochrome Submittal Package" [level=4] [ref=e771]
+              - paragraph [ref=e772]: PDF
+            - generic [ref=e773]:
+              - button "View" [ref=e774] [cursor=pointer]
+              - button "Download" [ref=e775] [cursor=pointer]
+          - article [ref=e776]:
+            - generic [ref=e777]:
+              - heading "Fixture Connection Schematics" [level=4] [ref=e778]
+              - paragraph [ref=e779]: PDF
+            - generic [ref=e780]:
+              - button "View" [ref=e781] [cursor=pointer]
+              - button "Download" [ref=e782] [cursor=pointer]
+          - article [ref=e783]:
+            - generic [ref=e784]:
+              - heading "Control Schedule" [level=4] [ref=e785]
+              - paragraph [ref=e786]: PDF
+            - generic [ref=e787]:
+              - button "View" [ref=e788] [cursor=pointer]
+              - button "Download" [ref=e789] [cursor=pointer]
+      - generic [ref=e790]:
+        - article [ref=e791]:
+          - generic [ref=e793]:
+            - heading "Model Provenance" [level=3] [ref=e794]
+            - paragraph [ref=e795]: Recorded model lineage and inference pipeline used to produce the package.
+          - generic [ref=e796]:
+            - list [ref=e797]:
+              - listitem [ref=e798]:
+                - generic [ref=e799]: Checkpoint SHA
+                - generic [ref=e800]: 36a7094c...
+              - listitem [ref=e801]:
+                - generic [ref=e802]: compliance_ready
+                - generic [ref=e803]: "true"
+              - listitem [ref=e804]:
+                - generic [ref=e805]: Standards Profile
+                - generic [ref=e806]: us_domestic_water_plan_v1
+            - list [ref=e807]:
+              - listitem [ref=e808]: Ingest plan raster and normalize drawing scale.
+              - listitem [ref=e809]: Run TinyUNet v3 forward pass over 11 input channels.
+              - listitem [ref=e810]: Generate fixture probability maps and service priors.
+              - listitem [ref=e811]: Resolve constrained domestic water supply routing.
+              - listitem [ref=e812]: Aggregate WSFU load and convert branch demand to GPM.
+              - listitem [ref=e813]: Assign segment sizing per standards profile.
+              - listitem [ref=e814]: Render permit sheets, monochrome package, and export payloads.
+        - article [ref=e815]:
+          - generic [ref=e817]:
+            - heading "Signature Block" [level=3] [ref=e818]
+            - paragraph [ref=e819]: Finalize the permit set with preparer details and completion marker.
+          - generic [ref=e820]:
+            - generic [ref=e821]:
+              - generic [ref=e822]:
+                - generic [ref=e823]: Name
+                - textbox "Name" [ref=e824]:
+                  - /placeholder: Reviewer / Engineer
+              - generic [ref=e825]:
+                - generic [ref=e826]: Date
+                - textbox "Date" [ref=e827]: 2026-05-31
+              - generic [ref=e828]:
+                - generic [ref=e829]: License
+                - textbox "License" [ref=e830]:
+                  - /placeholder: License ID
+            - button "Sign & Mark Complete" [ref=e832] [cursor=pointer]
+            - paragraph [ref=e833]: Awaiting signature confirmation.

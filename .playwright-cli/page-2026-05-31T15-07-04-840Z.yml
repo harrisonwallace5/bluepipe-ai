@@ -1,0 +1,78 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - img [ref=e6]
+      - generic [ref=e9]:
+        - heading "BluePipe AI" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Plumbing Plan Analyzer
+    - navigation "Primary navigation" [ref=e12]:
+      - button "Dashboard" [ref=e13] [cursor=pointer]:
+        - img [ref=e14]
+        - generic [ref=e17]: Dashboard
+      - button "Upload Plan" [ref=e18] [cursor=pointer]:
+        - img [ref=e19]
+        - generic [ref=e22]: Upload Plan
+      - button "Results" [ref=e23] [cursor=pointer]:
+        - img [ref=e24]
+        - generic [ref=e26]: Results
+      - button "Permit Package" [ref=e27] [cursor=pointer]:
+        - img [ref=e28]
+        - generic [ref=e31]: Permit Package
+      - button "Export" [ref=e32] [cursor=pointer]:
+        - img [ref=e33]
+        - generic [ref=e35]: Export
+    - generic [ref=e36]:
+      - generic [ref=e37]: Inference Model
+      - generic [ref=e40]: "Model: TinyUNet v3"
+  - main [ref=e41]:
+    - generic [ref=e177]:
+      - generic [ref=e178]:
+        - generic [ref=e179]:
+          - generic [ref=e180]: Plan Ingestion
+          - heading "Upload Plumbing Plan" [level=2] [ref=e181]
+          - paragraph [ref=e182]: Drop a floor plan, configure standards and permit outputs, then run a simulated analysis pass that mirrors the production pipeline stages.
+        - generic [ref=e183]: Static Demo Workflow
+      - generic [ref=e184]:
+        - article [ref=e185]:
+          - generic [ref=e186]:
+            - generic [ref=e187] [cursor=pointer]:
+              - button "Drop your floor plan here or click to browse Accepts PDF, PNG, JPG, TIFF" [active] [ref=e188]
+              - generic [ref=e189]:
+                - img [ref=e191]
+                - generic [ref=e194]:
+                  - heading "Drop your floor plan here" [level=3] [ref=e195]
+                  - paragraph [ref=e196]: or click to browse
+                  - paragraph [ref=e197]: Accepts PDF, PNG, JPG, TIFF
+            - generic [ref=e221]:
+              - img "Selected plan preview" [ref=e223]
+              - generic [ref=e224]:
+                - strong [ref=e225]: bluepipe-test.png
+                - generic [ref=e226]: 68 bytes
+                - generic [ref=e227]: Files stay local in this static demo. No upload is sent anywhere.
+        - article [ref=e198]:
+          - generic [ref=e200]:
+            - heading "Analysis Options" [level=3] [ref=e201]
+            - paragraph [ref=e202]: Set standards, sizing profile, and output sheets before running the pipeline.
+          - generic [ref=e203]:
+            - generic [ref=e204]:
+              - generic [ref=e205]:
+                - checkbox "Use compliance-ready checkpoint (recommended)" [checked] [ref=e206]
+                - generic [ref=e207]: Use compliance-ready checkpoint (recommended)
+              - generic [ref=e208]:
+                - generic [ref=e209]: Standards Profile
+                - combobox "Standards Profile" [ref=e210]:
+                  - option "us_domestic_water_plan_v1" [selected]
+                  - option "us_domestic_water_plan_preview"
+              - generic [ref=e211]:
+                - generic [ref=e212]: Sizing Profile
+                - combobox "Sizing Profile" [ref=e213]:
+                  - option "Wisconsin DSPS" [selected]
+                  - option "Portland Prescriptive"
+                  - option "Milwaukee Utility Reference"
+              - generic [ref=e214]:
+                - checkbox "Generate permit package" [checked] [ref=e215]
+                - generic [ref=e216]: Generate permit package
+              - generic [ref=e217]:
+                - checkbox "Generate 30/60 isometric" [checked] [ref=e218]
+                - generic [ref=e219]: Generate 30/60 isometric
+            - button "Analyze Plan" [ref=e220] [cursor=pointer]
